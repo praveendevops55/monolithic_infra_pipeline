@@ -1,0 +1,63 @@
+pool: agentpool
+trigger: none
+jobs:
+- job: TerraformInitvalidateplan
+  displayName: pahla job
+  pool: agentpool
+  steps:
+  - task: TerraformTask@5
+    inputs:
+     provider: 'azurerm'
+     command: 'init'
+     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+     backendServiceArm: 'sc'
+     backendAzureRmResourceGroupName: 'chandra-rg'
+     backendAzureRmStorageAccountName: 'bhushan123'
+     backendAzureRmContainerName: 'tfstate'
+     backendAzureRmKey: 'dev-terraform.tfstate'
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'validate'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'plan'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#       environmentServiceNameAzureRM: 'sc'
+
+# - job: Terraformmanual
+#   displayName: dusara job
+#   dependsOn: TerraformInitvalidateplan
+#   pool: server
+#   steps:
+#   - task: ManualValidation@1
+#     inputs:
+#       notifyUsers: 'chandrapratap.smsit@gmail.com'
+#       approvers: 'chandrapratap.smsit@gmail.com'
+#       instructions: 'Please approve'
+
+# - job: Terraformapply
+#   displayName: tisara job
+#   dependsOn: Terraformmanual
+#   pool: agentpool
+#   steps:
+
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'init'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#       backendServiceArm: 'sc'
+#       backendAzureRmStorageAccountName: 'bhushan123'
+#       backendAzureRmContainerName: 'tfstate'
+#       backendAzureRmKey: 'dev-terraform.tfstate'
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'apply'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+#       environmentServiceNameAzureRM: 'sc'
+
+  
